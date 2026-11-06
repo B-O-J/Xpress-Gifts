@@ -79,7 +79,7 @@ footer{background:#000;color:#f5e9e8;padding:40px 0 90px;text-align:center;font-
 <label>Delivery address<input name="addr" required placeholder="Street, area, city"></label><div class="r2"><label>Delivery date<input type="date" name="date" id="dd"></label><label class="ck" style="align-self:end"><span><input type="checkbox" name="sur" value="yes"> Surprise: don’t mention prices to the recipient</span></label></div></fieldset>
 <fieldset><legend>Your details</legend><div class="r2"><label>Your name<input name="name" required></label><label>Phone or WhatsApp<input type="tel" name="phone" required></label></div><label>Email (optional)<input type="email" name="email"></label></fieldset>
 <button class="btn" type="submit">Send my request</button></form>
-<div class="ok" id="ok"><h3>Almost done</h3><p>Send your request on WhatsApp so we can start your quote right away.</p><a class="btn" id="oka" target="_blank" rel="noopener">Send on WhatsApp</a></div></div></section>
+<div class="ok" id="ok"><h3>Almost done</h3><p>Send your request on WhatsApp so we can start your quote right away.</p><a class="btn" id="oka" target="_blank" rel="noopener">Send on WhatsApp</a> <button class="btn o" type="button" id="again" style="margin-left:8px">Send another request</button></div></div></section>
 
 <section id="chat"><div class="w"><h2>Prefer to chat?</h2><p class="lead">Message us on WhatsApp for questions, custom orders, delivery updates or quotes. We reply as quickly as we can.</p>
 <div class="q" id="qb"></div></div></section>
@@ -119,8 +119,9 @@ const R=[{n:"",t:"The bouquet was wrapped beautifully and looked even better tha
 $("#rg").innerHTML=R.map(r=>`<div class="card"><div class="cb rv"><div class="st" aria-label="5 stars">★★★★★</div><p>“${r.t}”</p><b class="nm">${r.n}</b></div></div>`).join("");
 $("#rv").href=wa("Hello Xpressgifts! I’d like to share a review.");$("#fw").href=wa("Hello Xpressgifts! I’d like to make an enquiry.");
 $("#dd").min=new Date().toISOString().slice(0,10);
+$("#again").onclick=()=>{$("#ok").classList.remove("on");$("#request").scrollIntoView()};
 $("#f").onsubmit=e=>{e.preventDefault();const d=new FormData(e.target),pz=d.getAll("pz").join(", ")||"None";
 const m=`Hello Xpressgifts! New gift request:\n\nGift type: ${d.get("type")}\nDetails: ${d.get("details")}\nBudget: ${d.get("budget")}\nQuantity: ${d.get("qty")}\nPersonalization: ${pz}\nCard message: ${d.get("card")||"-"}\n\nRecipient: ${d.get("rname")} (${d.get("rphone")||"-"})\nAddress: ${d.get("addr")}\nDelivery date: ${d.get("date")||"-"}\nSurprise (hide prices): ${d.get("sur")?"Yes":"No"}\n\nFrom: ${d.get("name")} (${d.get("phone")})\nEmail: ${d.get("email")||"-"}`;
 if(!FS.includes("YOUR_FORM_ID")){d.append("_subject","New Xpressgifts gift request");try{fetch(FS,{method:"POST",body:d,headers:{Accept:"application/json"}}).catch(()=>{})}catch(x){}}
-$("#oka").href=wa(m);e.target.style.display="none";$("#ok").classList.add("on");$("#ok").scrollIntoView()};
+$("#oka").href=wa(m);e.target.reset();$("#ok").classList.add("on");$("#ok").scrollIntoView()};
 </script></body></html>
